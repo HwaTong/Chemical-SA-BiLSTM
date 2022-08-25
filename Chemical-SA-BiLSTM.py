@@ -206,9 +206,11 @@ def train_model(model_path, nb_classes, gram_len, vocab_len, X_train, Y_train, X
 
     model=Sequential()
     model.add(Masking(mask_value=0., input_shape=(MAXLEN - gram_len + 1, vocab_len + 7)))
-    model.add(SeqSelfAttention(attention_activation='sigmoid'))
     model.add(Bidirectional(LSTM(64, return_sequences=True)))
-    model.add(Bidirectional(LSTM(32)))
+    model.add(Bidirectional(LSTM(32, return_sequences=True)))
+
+    model.add(SeqSelfAttention(attention_activation='sigmoid'))
+    model.add(attention_flatten(32))
     model.add(Dropout(0.35))
     model.add(Dense(units=256,activation='relu'))
     model.add(Dropout(0.35))
