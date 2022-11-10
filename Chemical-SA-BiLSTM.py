@@ -275,46 +275,46 @@ def predict(model_path, X_test):
 
 
 def compute_performance(preds, labels):
-    preds = np.round(preds, 2)
+#     preds = np.round(preds, 2)
     # f = 0
     # p = 0
     # r = 0
     # a = 0
 
-    for t in range(1, 100):
-        threshold = t / 100.0
-        predictions = (preds > threshold).astype(np.int32)
-        f = 0.0
-        p = 0.0
-        r = 0.0
-        a = 0.0
-        total = 0
-        p_total = 0
-        a_total = 0
-        for i in range(labels.shape[0]):
-            tp = np.sum(predictions[i, :] * labels[i, :])
-            fp = np.sum(predictions[i, :]) - tp
-            fn = np.sum(labels[i, :]) - tp
-            tn = len(labels[i, :])
+#     for t in range(1, 100):
+#         threshold = t / 100.0
+#         predictions = (preds > threshold).astype(np.int32)
+#         f = 0.0
+#         p = 0.0
+#         r = 0.0
+#         a = 0.0
+#         total = 0
+#         p_total = 0
+#         a_total = 0
+#         for i in range(labels.shape[0]):
+#             tp = np.sum(predictions[i, :] * labels[i, :])
+#             fp = np.sum(predictions[i, :]) - tp
+#             fn = np.sum(labels[i, :]) - tp
+#             tn = len(labels[i, :])
 
-            if tp == 0 and fp == 0 and fn == 0:
-                continue
-            total += 1
-            if tp != 0:
-                p_total += 1
-                precision = tp / (1.0 * (tp + fp))
-                recall = tp / (1.0 * (tp + fn))
-                acc = (1.0 * (tp + tn)) / (1.0 * (tp + fp + tn + fn))
-                p += precision
-                r += recall
-                a += acc
-        if p_total == 0:
-            continue
-        r /= total
-        p /= p_total
-        a /= a_total
-        if p + r > 0:
-            f = 2 * p * r / (p + r)
+#             if tp == 0 and fp == 0 and fn == 0:
+#                 continue
+#             total += 1
+#             if tp != 0:
+#                 p_total += 1
+#                 precision = tp / (1.0 * (tp + fp))
+#                 recall = tp / (1.0 * (tp + fn))
+#                 acc = (1.0 * (tp + tn)) / (1.0 * (tp + fp + tn + fn))
+#                 p += precision
+#                 r += recall
+#                 a += acc
+#         if p_total == 0:
+#             continue
+#         r /= total
+#         p /= p_total
+#         a /= a_total
+#         if p + r > 0:
+#             f = 2 * p * r / (p + r)
     return f, p, r, a
 
 if __name__ == '__main__':
